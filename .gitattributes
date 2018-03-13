@@ -1,0 +1,10 @@
+*.cs encoding=utf-8-with-signature
+*.js encoding=utf-8-with-signature
+*.cshtml encoding=utf-8-with-signature
+*.html encoding=utf-8-with-signature
+*.css encoding=utf-8-with-signature
+*.less encoding=utf-8-with-signature
+*.xproj encoding=utf-8-with-signature
+*.csproj encoding=utf-8-with-signature
+*.sln encoding=utf-8-with-signature
+*.sql encoding=utf-8-with-signature
