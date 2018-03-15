@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Tms.DataLayer.Repositories.Interfaces
 {
-    public interface ICommonReadonlyRepository<TDbEntity> where TDbEntity : IDbEntity
+    public interface IReadonlyRepository<TDbEntity> where TDbEntity : IDbEntity
     {
         TDbEntity Find(int id);
         IQueryable<TDbEntity> Find(Expression<Func<TDbEntity, bool>> filter = null);

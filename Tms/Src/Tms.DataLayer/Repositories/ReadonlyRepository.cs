@@ -5,7 +5,7 @@ using Tms.DataLayer.Repositories.Interfaces;
 
 namespace Tms.DataLayer.Repositories
 {
-    internal class ReadonlyRepository<TDbEntity>: RepositoryBase<TDbEntity>, ICommonReadonlyRepository<TDbEntity> where TDbEntity : class, IDbEntity
+    internal class ReadonlyRepository<TDbEntity>: RepositoryBase<TDbEntity>, IReadonlyRepository<TDbEntity> where TDbEntity : class, IDbEntity
     {
         public ReadonlyRepository(TmsContext tmsContext) : base(tmsContext)
         {

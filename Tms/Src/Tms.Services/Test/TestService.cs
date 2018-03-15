@@ -11,7 +11,7 @@ namespace Tms.Services.Test
     public class TestService : ITestService
     {
         private readonly IRepositoryManager _repositoryManager;
-        private ICommonRepository<DbTest> TestRepository => _repositoryManager.GetCommonRepository<DbTest>();
+        private IRepository<DbTest> TestRepository => _repositoryManager.GetRepository<DbTest>();
 
         public TestService(IRepositoryManager repositoryManager)
         {

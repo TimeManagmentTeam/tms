@@ -16,12 +16,12 @@ namespace Tms.DataLayer.Repositories
             _context.SaveChanges();
         }
 
-        public ICommonRepository<TDbEntity> GetCommonRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new()
+        public IRepository<TDbEntity> GetRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new()
         {
             return new Repository<TDbEntity>(_context);
         }
 
-        public ICommonReadonlyRepository<TDbEntity> GetCommonReadonlyRepository<TDbEntity>() where TDbEntity : class, IDbEntity
+        public IReadonlyRepository<TDbEntity> GetReadonlyRepository<TDbEntity>() where TDbEntity : class, IDbEntity
         {
             return new ReadonlyRepository<TDbEntity>(_context);
         }

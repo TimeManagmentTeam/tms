@@ -2,8 +2,8 @@ namespace Tms.DataLayer.Repositories.Interfaces
 {
     public interface IRepositoryManager
     {
-        ICommonRepository<TDbEntity> GetCommonRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new();
-        ICommonReadonlyRepository<TDbEntity> GetCommonReadonlyRepository<TDbEntity>() where TDbEntity : class, IDbEntity;
+        IRepository<TDbEntity> GetRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new();
+        IReadonlyRepository<TDbEntity> GetReadonlyRepository<TDbEntity>() where TDbEntity : class, IDbEntity;
         void SaveChanges();
     }
 }
