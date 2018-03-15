@@ -3,7 +3,7 @@ using Tms.DataLayer.Entities;
 
 namespace Tms.DataLayer
 {
-    public class TmsContext : DbContext
+    internal class TmsContext : DbContext
     {
         public TmsContext() { }
         public TmsContext(DbContextOptions<TmsContext> options) : base(options) { }
@@ -11,7 +11,7 @@ namespace Tms.DataLayer
         public DbSet<DbTest> TestEntities { get; set; }
     }
 
-    public static class TmsContextFactory
+    internal static class TmsContextFactory
     {
         public static TmsContext GetTestContext()
         {

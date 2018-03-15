@@ -2,13 +2,8 @@
 
 namespace Tms.DataLayer.Repositories
 {
-    public class RepositoryManager : IRepositoryManager
+    internal class RepositoryManager : IRepositoryManager
     {
-        public ICommonRepository<TDbEntity> GetCommonRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new()
-        {
-            return new CommonRepository<TDbEntity>(_context);
-        }
-
         private readonly TmsContext _context;
 
         public RepositoryManager(TmsContext context)
@@ -21,9 +16,14 @@ namespace Tms.DataLayer.Repositories
             _context.SaveChanges();
         }
 
+        public ICommonRepository<TDbEntity> GetCommonRepository<TDbEntity>() where TDbEntity : class, IDbEntity, new()
+        {
+            return new Repository<TDbEntity>(_context);
+        }
+
         public ICommonReadonlyRepository<TDbEntity> GetCommonReadonlyRepository<TDbEntity>() where TDbEntity : class, IDbEntity
         {
-            return new CommonReadonlyRepository<TDbEntity>(_context);
+            return new ReadonlyRepository<TDbEntity>(_context);
         }
     }
 }

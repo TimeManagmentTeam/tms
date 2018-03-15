@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tms.DataLayer.IoC;
 using Tms.Services.Test;
 using Tms.Services.Test.Interfaces;
-using Tms.WebUI.Infrastructure;
 
 namespace Tms.WebUI
 {
@@ -22,7 +22,7 @@ namespace Tms.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .WithDataLayerServices(Configuration)
+                .WithDataLayer()
                 .AddScoped<ITestService, TestService>()
                 .AddAutoMapper();
             services.AddMvc();

@@ -3,15 +3,14 @@ using Tms.DataLayer.Repositories.Interfaces;
 
 namespace Tms.DataLayer.Repositories
 {
-    public abstract class RepositoryBase<TDbEntity> where TDbEntity : class, IDbEntity
+    internal abstract class RepositoryBase<TDbEntity> where TDbEntity : class, IDbEntity
     {
+        protected TmsContext TmsContext { get; }
+        protected DbSet<TDbEntity> EntitiesSet => TmsContext.Set<TDbEntity>();
+
         protected RepositoryBase(TmsContext tmsContext)
         {
             TmsContext = tmsContext;
         }
-
-        protected TmsContext TmsContext { get; }
-
-        protected DbSet<TDbEntity> EntitiesSet => TmsContext.Set<TDbEntity>();
     }
 }
