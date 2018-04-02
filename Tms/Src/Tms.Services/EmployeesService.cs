@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
 
@@ -31,5 +32,9 @@ namespace Tms.Services
 
         public void Delete(Employee employee) => EmployeesRepository.Delete(employee);
 
+        public Employee[] GetAll()
+        {
+            return EmployeesRepository.Find().ToArray();
+        }
     }
 }
