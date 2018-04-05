@@ -8,33 +8,44 @@ namespace Tms.Services
     public class EmployeesService
     {
         private readonly IRepositoryManager _repositoryManager;
-        private IRepository<Employee> EmployeesRepository => _repositoryManager.GetRepository<Employee>();
+        private IRepository<DbEmployee> EmployeesRepository => _repositoryManager.GetRepository<DbEmployee>();
 
         public EmployeesService(IRepositoryManager repositoryManager)
         {
             _repositoryManager = repositoryManager;
         }
 
-        public void Create(Employee employee) => EmployeesRepository.Add(employee);
+        public void Create(Employee employee)
+        {
+            EmployeesRepository.Add(employee.ToDbEmployee());
+            _repositoryManager.SaveChanges();
+        }
 
-        public Employee Read(Guid id) => EmployeesRepository.First(e => e.Id == id);
+        public Employee Read(Guid id) => Employee.FromDbEmployee(EmployeesRepository.First(e => e.Id == id));
 
-        public Employee Read(string firstName, string lastName, string patronymic)
+        public Employee Read(string firstName, string lastName, string midlleName)
         {
             //TODO
             throw new NotImplementedException();
         }
+
         public void Update(Employee oldEmployee, Employee newEmployee)
         {
-            EmployeesRepository.Delete(oldEmployee);
-            EmployeesRepository.Add(newEmployee);
+            EmployeesRepository.Delete(oldEmployee.ToDbEmployee());
+            EmployeesRepository.Add(newEmployee.ToDbEmployee());
+            _repositoryManager.SaveChanges();
         }
 
-        public void Delete(Employee employee) => EmployeesRepository.Delete(employee);
+        public void Delete(Guid id)
+        {
+            var dbemployee = Read(id);
+            EmployeesRepository.Delete(dbemployee.ToDbEmployee());
+            _repositoryManager.SaveChanges();
+        }
 
         public Employee[] GetAll()
         {
-            return EmployeesRepository.Find().ToArray();
+            return EmployeesRepository.Find().Select(db=>Employee.FromDbEmployee(db)).ToArray();
         }
     }
 }
