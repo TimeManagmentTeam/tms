@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
 
@@ -15,37 +17,37 @@ namespace Tms.Services
             _repositoryManager = repositoryManager;
         }
 
-        public void Create(Employee employee)
+        public void Create(DtoEmployee dtoEmployee)
         {
-            EmployeesRepository.Add(employee.ToDbEmployee());
+            EmployeesRepository.Add(Mapper.Map<DbEmployee>(dtoEmployee));
             _repositoryManager.SaveChanges();
         }
 
-        public Employee Read(Guid id) => Employee.FromDbEmployee(EmployeesRepository.First(e => e.Id == id));
+        public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == id));
 
-        public Employee Read(string firstName, string lastName, string midlleName)
+        public DtoEmployee Read(string firstName, string lastName, string midlleName)
         {
             //TODO
             throw new NotImplementedException();
         }
 
-        public void Update(Employee oldEmployee, Employee newEmployee)
+        public void Update(DtoEmployee oldDtoEmployee, DtoEmployee newDtoEmployee)
         {
-            EmployeesRepository.Delete(oldEmployee.ToDbEmployee());
-            EmployeesRepository.Add(newEmployee.ToDbEmployee());
+            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(oldDtoEmployee));
+            EmployeesRepository.Add(Mapper.Map<DbEmployee>(newDtoEmployee));
             _repositoryManager.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
             var dbemployee = Read(id);
-            EmployeesRepository.Delete(dbemployee.ToDbEmployee());
+            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(dbemployee));
             _repositoryManager.SaveChanges();
         }
 
-        public Employee[] GetAll()
+        public DtoEmployee[] GetAll()
         {
-            return EmployeesRepository.Find().Select(db=>Employee.FromDbEmployee(db)).ToArray();
+            return EmployeesRepository.Find().ProjectTo<DtoEmployee>().ToArray();
         }
     }
 }
