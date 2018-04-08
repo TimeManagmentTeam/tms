@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "PgSqlServer": "Server=localhost; Database=tms; User Id=postgres; Password=q1w2e3R$;"
+    //"HangfirePgSqlServer": "Server=; Database=; User Id=; Password=;"
+  }
+}
