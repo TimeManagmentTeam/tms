@@ -16,11 +16,6 @@ namespace Tms.Services.EmployeesService
         public EmployeesService(IRepositoryManager repositoryManager)
         {
             _repositoryManager = repositoryManager;
-
-            Mapper.Initialize(cfg => cfg.CreateMap<DtoEmployee, DbEmployee>()
-                    .ForMember("Role", opt => opt.MapFrom(c => (int)c.Role)));
-            Mapper.Initialize(cfg => cfg.CreateMap<DbEmployee, DtoEmployee>()
-                    .ForMember("Role", opt => opt.MapFrom(c => (DtoEmployee.TmsRole)c.Role)));
         }
 
         public void Create(DtoEmployee dtoEmployee)
@@ -43,7 +38,7 @@ namespace Tms.Services.EmployeesService
             employeer.FirstName = newDtoEmployee.FirstName;
             employeer.MidlleName = newDtoEmployee.MidlleName;
             employeer.LastName = newDtoEmployee.LastName;
-            employeer.Role = (int) newDtoEmployee.Role;
+            employeer.Role = newDtoEmployee.Role;
             employeer.PassHash = newDtoEmployee.PassHash;
             _repositoryManager.SaveChanges();
         }

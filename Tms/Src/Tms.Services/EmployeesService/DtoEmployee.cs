@@ -1,4 +1,5 @@
 ﻿using System;
+using Tms.DataLayer.Enums;
 
 namespace Tms.Services.EmployeesService
 {
@@ -10,11 +11,5 @@ namespace Tms.Services.EmployeesService
         public string MidlleName { get; set; }
         public TmsRole Role { get; set; }
         public string PassHash { get; set; }
-
-        public enum TmsRole
-        {
-            Admin,
-            Employee
-        }
     }
 }
