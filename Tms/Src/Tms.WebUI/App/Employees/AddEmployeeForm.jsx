@@ -17,7 +17,7 @@ export default class AddEmployeeModal extends React.Component {
             <div className="add-employee-form__first-line">
                 <input type="text" className="add-employee-form__input" placeholder="Фамилия" name="lastName" />
                 <input type="text" className="add-employee-form__input" placeholder="Имя" name="firstName" />
-                <input type="text" className="add-employee-form__input" placeholder="Отчество" name="patronymic" />
+                <input type="text" className="add-employee-form__input" placeholder="Отчество" name="middleName" />
             </div>
             <div className="add-employee-form__second-line">
                 <div className="add-employee-form__ok-button" onClick={this.addEmployee}>Создать</div>

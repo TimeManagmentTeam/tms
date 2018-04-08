@@ -9,7 +9,7 @@ namespace Tms.DataLayer.IoC
         public static IServiceCollection WithDataLayer(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                .AddScoped(provider => TmsContextFactory.GetTestContext())
+                .AddScoped(provider => TmsContextFactory.GetEmployeeContext())
                 .AddScoped<IRepositoryManager, RepositoryManager>();
         }
     }

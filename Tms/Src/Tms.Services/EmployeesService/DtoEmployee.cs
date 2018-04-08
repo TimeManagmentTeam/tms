@@ -8,7 +8,7 @@ namespace Tms.Services.EmployeesService
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string MidlleName { get; set; }
+        public string MiddleName { get; set; }
         public TmsRole Role { get; set; }
         public string PassHash { get; set; }
     }

@@ -19,7 +19,7 @@ export default class EditEmployeeModal extends React.Component {
                 <input type="text" className="edit-employee-form__input" placeholder="ID" name="id" defaultValue={employee.id} readOnly={true} />
                 <input type="text" className="edit-employee-form__input" placeholder="Фамилия" name="lastName" defaultValue={employee.lastName} />
                 <input type="text" className="edit-employee-form__input" placeholder="Имя" name="firstName" defaultValue={employee.firstName} />
-                <input type="text" className="edit-employee-form__input" placeholder="Отчество" name="patronymic" defaultValue={employee.patronymic} />
+                <input type="text" className="edit-employee-form__input" placeholder="Отчество" name="middleName" defaultValue={employee.middleName} />
             </div>
             <div className="edit-employee-form__second-line">
                 <div className="edit-employee-form__ok-button" onClick={this.editEmployee}>Изменить</div>

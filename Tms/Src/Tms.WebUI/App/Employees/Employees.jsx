@@ -44,7 +44,6 @@ export default class Employees extends React.Component {
             method: "POST",
             body: formData
         })
-            .then(res => res.json())
             .then(result => {
                 this.loadEmployees();
             }, (error) => {
@@ -52,10 +51,10 @@ export default class Employees extends React.Component {
     }
 
     removeEmployee = id => {
-        fetch(`/api/Employees/Remove/${id}`, {
+        console.log(id);
+        fetch(`/api/Employees/Delete/${id}`, {
             method: 'POST'
         })
-            .then(res => res.json())
             .then(result => {
                 this.loadEmployees();
             }, (error) => {
@@ -68,7 +67,6 @@ export default class Employees extends React.Component {
             method: "POST",
             body: formData
         })
-            .then(res => res.json())
             .then(result => {
                 this.loadEmployees();
             }, (error) => {

@@ -8,15 +8,15 @@ namespace Tms.DataLayer
         public TmsContext() { }
         public TmsContext(DbContextOptions<TmsContext> options) : base(options) { }
 
-        public DbSet<DbTest> TestEntities { get; set; }
+        public DbSet<DbEmployee> EmployeeEntities { get; set; }
     }
 
     internal static class TmsContextFactory
     {
-        public static TmsContext GetTestContext()
+        public static TmsContext GetEmployeeContext()
         {
             var options = new DbContextOptionsBuilder<TmsContext>()
-                .UseInMemoryDatabase(databaseName: "Test")
+                .UseInMemoryDatabase(databaseName: "Employee")
                 .Options;
             var context = new TmsContext(options);
             return context;

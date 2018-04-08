@@ -36,7 +36,7 @@ namespace Tms.Services.EmployeesService
         {
             var employeer = EmployeesRepository.First(e => e.Id == employeerId);
             employeer.FirstName = newDtoEmployee.FirstName;
-            employeer.MidlleName = newDtoEmployee.MidlleName;
+            employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Role = newDtoEmployee.Role;
             employeer.PassHash = newDtoEmployee.PassHash;
@@ -45,8 +45,9 @@ namespace Tms.Services.EmployeesService
 
         public void Delete(Guid id)
         {
-            var dbEmployee = Read(id);
-            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(dbEmployee));
+            //var dbEmployee = Read(id);
+            var employeer = EmployeesRepository.First(e => e.Id == id);
+            EmployeesRepository.Delete(employeer);
             _repositoryManager.SaveChanges();
         }
 

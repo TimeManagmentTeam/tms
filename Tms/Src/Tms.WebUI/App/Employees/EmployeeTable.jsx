@@ -6,8 +6,7 @@ import './EmployeeTable.css';
 
 export default class EmployeeTable extends React.Component {
     removeEmployee = e => {
-        let id = Number(e.target.getAttribute('data-id'));
-        this.props.removeEmployee(id);
+        this.props.removeEmployee(e.target.getAttribute('data-id'));
     }
 
     render() {
@@ -17,7 +16,8 @@ export default class EmployeeTable extends React.Component {
                 {
                     Header: 'ID',
                     accessor: 'id',
-                    width: 48
+                    width: 60,
+                    className: 'employee-table__id-cell'
                 },
                 {
                     Header: 'Фамилия',
@@ -29,14 +29,12 @@ export default class EmployeeTable extends React.Component {
                 },
                 {
                     Header: 'Отчество',
-                    accessor: 'patronymic',
-                    className: 'employee-table__cell'
+                    accessor: 'middleName'
                 },
                 {
                     expander: true,
                     width: 24,
                     Expander: ({ isExpanded, ...rest }) => <span className="employee-table__edit-button material-icons">edit</span>
-
                 },
                 {
                     width: 24,
