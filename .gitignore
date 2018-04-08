@@ -210,3 +210,6 @@ logs
 
 #Resharper configs
 *.Personal.DotSettings
+
+node_modules
+assets

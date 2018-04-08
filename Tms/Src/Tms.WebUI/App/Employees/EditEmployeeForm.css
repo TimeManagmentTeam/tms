@@ -1,0 +1,35 @@
+﻿.edit-employee-form__first-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.edit-employee-form__input {
+    flex-basis: 20%;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: #d0d0d0;
+    color: #505050;
+}
+
+
+.edit-employee-form__input:focus {
+    outline: none;
+}
+
+
+.edit-employee-form__second-line {
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.edit-employee-form__ok-button {
+    color: #000;
+    font-size: 14px;
+    padding: 7px 30px;
+    cursor: pointer;
+    background-color: #aaa;
+}

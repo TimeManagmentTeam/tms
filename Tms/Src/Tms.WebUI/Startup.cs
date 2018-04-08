@@ -40,7 +40,7 @@ namespace Tms.WebUI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseWebpackDevMiddleware();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
