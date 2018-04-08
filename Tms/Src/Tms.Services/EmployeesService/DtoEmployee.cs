@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tms.Services
+namespace Tms.Services.EmployeesService
 {
     public class DtoEmployee
     {
@@ -8,13 +8,13 @@ namespace Tms.Services
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MidlleName { get; set; }
-        public string Role { get; set; }
+        public TmsRole Role { get; set; }
         public string PassHash { get; set; }
 
-        public static class TmsRole
+        public enum TmsRole
         {
-            public const string Admin = "Admin";
-            public const string Employee = "DtoEmployee";
+            Admin,
+            Employee
         }
     }
 }

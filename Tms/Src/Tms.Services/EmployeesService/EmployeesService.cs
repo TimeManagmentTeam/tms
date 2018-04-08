@@ -4,8 +4,9 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
+using System.Collections.Generic;
 
-namespace Tms.Services
+namespace Tms.Services.EmployeesService
 {
     public class EmployeesService
     {
@@ -15,6 +16,11 @@ namespace Tms.Services
         public EmployeesService(IRepositoryManager repositoryManager)
         {
             _repositoryManager = repositoryManager;
+
+            Mapper.Initialize(cfg => cfg.CreateMap<DtoEmployee, DbEmployee>()
+                    .ForMember("Role", opt => opt.MapFrom(c => (int)c.Role)));
+            Mapper.Initialize(cfg => cfg.CreateMap<DbEmployee, DtoEmployee>()
+                    .ForMember("Role", opt => opt.MapFrom(c => (DtoEmployee.TmsRole)c.Role)));
         }
 
         public void Create(DtoEmployee dtoEmployee)
@@ -31,21 +37,25 @@ namespace Tms.Services
             throw new NotImplementedException();
         }
 
-        public void Update(DtoEmployee oldDtoEmployee, DtoEmployee newDtoEmployee)
+        public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
         {
-            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(oldDtoEmployee));
-            EmployeesRepository.Add(Mapper.Map<DbEmployee>(newDtoEmployee));
+            var employeer = EmployeesRepository.First(e => e.Id == employeerId);
+            employeer.FirstName = newDtoEmployee.FirstName;
+            employeer.MidlleName = newDtoEmployee.MidlleName;
+            employeer.LastName = newDtoEmployee.LastName;
+            employeer.Role = (int) newDtoEmployee.Role;
+            employeer.PassHash = newDtoEmployee.PassHash;
             _repositoryManager.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            var dbemployee = Read(id);
-            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(dbemployee));
+            var dbEmployee = Read(id);
+            EmployeesRepository.Delete(Mapper.Map<DbEmployee>(dbEmployee));
             _repositoryManager.SaveChanges();
         }
 
-        public DtoEmployee[] GetAll()
+        public ICollection<DtoEmployee> GetAll()
         {
             return EmployeesRepository.Find().ProjectTo<DtoEmployee>().ToArray();
         }
