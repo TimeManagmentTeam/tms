@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Tms.WebUI
 {
@@ -13,6 +15,13 @@ namespace Tms.WebUI
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    var configPath = Path.Combine(Directory.GetCurrentDirectory(), "../../config");
+                    config
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile(Path.Combine(configPath, "db-config.json"), optional: false, reloadOnChange: true);
+                })
                 .Build();
     }
 }

@@ -5,11 +5,11 @@ namespace Tms.DataLayer
 {
     internal class TmsContext : DbContext
     {
-        public TmsContext() { }
         public TmsContext(DbContextOptions<TmsContext> options) : base(options) { }
 
         public DbSet<DbEmployee> EmployeeEntities { get; set; }
     }
+
 
     internal static class TmsContextFactory
     {
@@ -22,4 +22,5 @@ namespace Tms.DataLayer
             return context;
         }
     }
+
 }

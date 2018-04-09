@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tms.WebUI", "Src\Tms.WebUI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tms.DataLayer", "Src\Tms.DataLayer\Tms.DataLayer.csproj", "{5055EFA2-83EC-4460-B77E-7EDB9BDD35D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tms.Services", "Src\Tms.Services\Tms.Services.csproj", "{A6E6307E-23BD-410F-B574-E27D2833E8E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tms.Services", "Src\Tms.Services\Tms.Services.csproj", "{A6E6307E-23BD-410F-B574-E27D2833E8E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{5BB55E8F-3593-47CB-94B1-898553BF9D03}"
+	ProjectSection(SolutionItems) = preProject
+		config\db-config.json = config\db-config.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
