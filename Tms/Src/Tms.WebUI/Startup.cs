@@ -22,7 +22,7 @@ namespace Tms.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .WithDataLayer()
+                .WithDataLayer(Configuration)
                 .AddScoped<ITestService, TestService>()
                 .AddAutoMapper();
             services.AddMvc();
