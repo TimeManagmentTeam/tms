@@ -13,8 +13,6 @@ namespace Tms.DataLayer.IoC
 
             return serviceCollection
 
-                .AddScoped(provider => TmsContextFactory.GetEmployeeContext())
-
                 .AddScoped(provider => TmsContextFactory.GetContext(connectionString))
 
                 .AddScoped<IRepositoryManager, RepositoryManager>();

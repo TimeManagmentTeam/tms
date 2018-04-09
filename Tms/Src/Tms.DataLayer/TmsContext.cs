@@ -9,18 +9,4 @@ namespace Tms.DataLayer
 
         public DbSet<DbEmployee> EmployeeEntities { get; set; }
     }
-
-
-    internal static class TmsContextFactory
-    {
-        public static TmsContext GetEmployeeContext()
-        {
-            var options = new DbContextOptionsBuilder<TmsContext>()
-                .UseInMemoryDatabase(databaseName: "Employee")
-                .Options;
-            var context = new TmsContext(options);
-            return context;
-        }
-    }
-
 }
