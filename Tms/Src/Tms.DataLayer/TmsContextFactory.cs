@@ -16,7 +16,6 @@ namespace Tms.DataLayer
         {
             var options = new DbContextOptionsBuilder<TmsContext>()
                 .UseNpgsql(connectionString)
-                .UseInMemoryDatabase(databaseName: "Employee")
                 .Options;
             var context = new TmsContext(options);
             return context;
