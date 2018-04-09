@@ -1,0 +1,40 @@
+﻿.add-employee-form__first-line {
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.add-employee-form__input {
+    flex-basis: 30%;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: rgb(170, 17, 54);
+    color: #fff;
+}
+
+
+.add-employee-form__input::placeholder {
+    color: #cecece;
+}
+
+.add-employee-form__input:focus {
+    outline: none;
+}
+
+
+.add-employee-form__second-line {
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.add-employee-form__ok-button {
+    color: #ffffff;
+    font-size: 14px;
+    padding: 7px 30px;
+    cursor: pointer;
+    background-color: #860c29;
+}

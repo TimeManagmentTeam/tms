@@ -12,7 +12,11 @@ namespace Tms.DataLayer.IoC
             var connectionString = configuration.GetConnectionString("PgSqlServer");
 
             return serviceCollection
+
+                .AddScoped(provider => TmsContextFactory.GetEmployeeContext())
+
                 .AddScoped(provider => TmsContextFactory.GetContext(connectionString))
+
                 .AddScoped<IRepositoryManager, RepositoryManager>();
         }
     }
