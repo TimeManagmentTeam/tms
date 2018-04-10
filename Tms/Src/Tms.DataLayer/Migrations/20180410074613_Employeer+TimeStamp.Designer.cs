@@ -12,8 +12,8 @@ using Tms.DataLayer.Enums;
 namespace Tms.DataLayer.Migrations
 {
     [DbContext(typeof(TmsContext))]
-    [Migration("20180409071449_EmployeeEntities")]
-    partial class EmployeeEntities
+    [Migration("20180410074613_Employeer+TimeStamp")]
+    partial class EmployeerTimeStamp
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,8 @@ namespace Tms.DataLayer.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 
@@ -40,6 +42,32 @@ namespace Tms.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EmployeeEntities");
+                });
+
+            modelBuilder.Entity("Tms.DataLayer.Entities.DbTimeStamp", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<Guid>("DbEmployeeId");
+
+                    b.Property<TimeSpan>("WorkedTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DbEmployeeId");
+
+                    b.ToTable("TimeStampsEntities");
+                });
+
+            modelBuilder.Entity("Tms.DataLayer.Entities.DbTimeStamp", b =>
+                {
+                    b.HasOne("Tms.DataLayer.Entities.DbEmployee", "DbEmployee")
+                        .WithMany("TimeStamps")
+                        .HasForeignKey("DbEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
