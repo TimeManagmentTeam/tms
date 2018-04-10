@@ -7,7 +7,7 @@ namespace Tms.DataLayer.Entities
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
-        public DateTime WorkedTime { get; set; }
+        public TimeSpan WorkedTime { get; set; }
 
         public Guid DbEmployeeId { get; set; }
         public DbEmployee DbEmployee { get; set; }
