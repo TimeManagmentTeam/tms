@@ -26,12 +26,6 @@ namespace Tms.Services.EmployeesService
 
         public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == id));
 
-        public DtoEmployee Read(string firstName, string lastName, string midlleName)
-        {
-            //TODO
-            throw new NotImplementedException();
-        }
-
         public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
         {
             var employeer = EmployeesRepository.First(e => e.Id == employeerId);
@@ -39,13 +33,13 @@ namespace Tms.Services.EmployeesService
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Role = newDtoEmployee.Role;
+            employeer.Email = newDtoEmployee.Email;
             employeer.PassHash = newDtoEmployee.PassHash;
             _repositoryManager.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            //var dbEmployee = Read(id);
             var employeer = EmployeesRepository.First(e => e.Id == id);
             EmployeesRepository.Delete(employeer);
             _repositoryManager.SaveChanges();
