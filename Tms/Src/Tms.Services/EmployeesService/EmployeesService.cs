@@ -38,6 +38,22 @@ namespace Tms.Services.EmployeesService
             _repositoryManager.SaveChanges();
         }
 
+        public bool Verify(string email, string passHash, out DtoEmployee outEmployee)
+        {
+            if (EmployeesRepository.Any(e=>e.Email==email))
+            {
+                var employee = Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Email == email));
+                if (employee.PassHash == passHash)
+                {
+                    outEmployee = employee;
+                    return true;
+                }
+            }
+            outEmployee = null;
+            return false;
+
+        }
+
         public void Delete(Guid id)
         {
             var employeer = EmployeesRepository.First(e => e.Id == id);
