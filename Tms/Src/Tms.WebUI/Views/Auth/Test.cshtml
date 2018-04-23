@@ -9,6 +9,8 @@
 <body>
 <div>
     @(Model.Name)
+    @(Model.AuthenticationType)
+    @(Model.IsAuthenticated)
     <a href="@Url.Action("Logout", "Auth")">Logout</a>
 </div>
 </body>
