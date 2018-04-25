@@ -26,6 +26,12 @@ namespace Tms.Services.EmployeesService
 
         public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == id));
 
+        public ICollection<DtoEmployee> GetSubordinates(Guid id)
+        {
+            return EmployeesRepository.Find(e => e.DepartmentDirectorId == id || e.DirectorId == id)
+                .ProjectTo<DtoEmployee>().ToArray();
+        }
+
         public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
         {
             var employeer = EmployeesRepository.First(e => e.Id == employeerId);
