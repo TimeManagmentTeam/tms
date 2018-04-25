@@ -28,14 +28,14 @@ namespace Tms.Services.EmployeesService
 
         public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
         {
-            var employeer = Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == employeerId));
+            var employeer = EmployeesRepository.First(e => e.Id == employeerId);
             employeer.FirstName = newDtoEmployee.FirstName;
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Role = newDtoEmployee.Role;
             employeer.Blocked = newDtoEmployee.Blocked;
-            employeer.DepartmentDirector = newDtoEmployee.DepartmentDirector;
-            employeer.Director = newDtoEmployee.Director;
+            employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
+            employeer.DirectorId = newDtoEmployee.Director.Id;
             employeer.Email = newDtoEmployee.Email;
             employeer.PassHash = newDtoEmployee.PassHash;
             _repositoryManager.SaveChanges();
