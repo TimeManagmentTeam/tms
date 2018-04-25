@@ -1,9 +1,11 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using System.Text;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Tms.DataLayer.IoC;
 using Tms.Services.EmployeesService;
 
@@ -25,11 +27,27 @@ namespace Tms.WebUI
                 .WithDataLayer(Configuration)
                 .AddScoped<EmployeesService>()
                 .AddAutoMapper();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    //Адрес страницы аутентификации
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Auth/Login");
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // укзывает, будет ли валидироваться издатель при валидации токена
+                        ValidateIssuer = true,
+                        // строка, представляющая издателя
+                        ValidIssuer = AuthOptions.Issuer,
+                        // будет ли валидироваться потребитель токена
+                        ValidateAudience = true,
+                        // установка потребителя токена
+                        ValidAudience = AuthOptions.Audience,
+                        // будет ли валидироваться время существования
+                        ValidateLifetime = true,
+                        // установка ключа безопасности
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        // валидация ключа безопасности
+                        ValidateIssuerSigningKey = true,
+                    };
                 });
             services.AddMvc();
         }
@@ -57,6 +75,18 @@ namespace Tms.WebUI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public class AuthOptions
+        {
+            public const string Issuer = "MyAuthServer"; // издатель токена
+            public const string Audience = "http://localhost:5000"; // потребитель токена
+            const string Key = "SecretSecretSecretSecretSecretSecretSecret";   // ключ для шифрации
+            public const int Lifetime = 1; // время жизни токена - 1 минута
+            public static SymmetricSecurityKey GetSymmetricSecurityKey()
+            {
+                return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Key));
+            }
         }
     }
 }

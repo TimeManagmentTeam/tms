@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Tms.Services.EmployeesService;
 using Tms.WebUI.Models;
 
@@ -27,7 +27,7 @@ namespace Tms.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AuthModel model)
+        public JsonResult Login(AuthModel model)
         {
             //Проверяем что совпадает логин и пароль
             if (_employeesService.Verify(model.Email, model.PassHash, out var employee))
@@ -42,27 +42,28 @@ namespace Tms.WebUI.Controllers
                     new Claim(ClaimTypes.Role, employee.Role.ToString())
                 };
 
-                // создаем объект ClaimsIdentity
-                var id = new ClaimsIdentity(claims,
-                    "ApplicationCookie",                    //Тип аутентификации
-                    ClaimsIdentity.DefaultNameClaimType,    //Ключ который будет использоваться для определении имени пользователя
-                    ClaimsIdentity.DefaultRoleClaimType);   //Ключ который будет использоваться для определении роли пользователя
+                //Создаём токен
+                var token = new JwtSecurityToken(
+                    issuer: Startup.AuthOptions.Issuer,
+                    audience: Startup.AuthOptions.Audience,
+                    notBefore: DateTime.Now,
+                    claims: claims,
+                    expires: DateTime.Now.Add(TimeSpan.FromMinutes(Startup.AuthOptions.Lifetime)),
+                    signingCredentials: new SigningCredentials(Startup.AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                // установка аутентификационных куки
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-
-                return RedirectToAction("Test", "Auth");
+                //Возвращаем токен пользователю
+                return Json(new
+                {
+                    IsSuccess = true,
+                    Token = encodedToken
+                });
             }
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 
-            return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return Json(new
+            {
+                IsSuccess = false
+            });
         }
 
         [HttpGet]
