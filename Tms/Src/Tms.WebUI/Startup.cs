@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,12 @@ namespace Tms.WebUI
                 .WithDataLayer(Configuration)
                 .AddScoped<EmployeesService>()
                 .AddAutoMapper();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    //Адрес страницы аутентификации
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Auth/Login");
+                });
             services.AddMvc();
         }
 
@@ -42,7 +49,8 @@ namespace Tms.WebUI
 
             app.UseWebpackDevMiddleware();
             app.UseStaticFiles();
-
+            //Добавление middleware аутентификации
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

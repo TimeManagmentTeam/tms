@@ -20,16 +20,28 @@ export default class EmployeeTable extends React.Component {
                     className: 'employee-table__id-cell'
                 },
                 {
-                    Header: 'Фамилия',
-                    accessor: 'lastName'
-                },
-                {
-                    Header: 'Имя',
+                    Header: 'FirstName',
                     accessor: 'firstName'
                 },
                 {
-                    Header: 'Отчество',
+                    Header: 'MiddleName',
                     accessor: 'middleName'
+                },
+                {
+                    Header: 'LastName',
+                    accessor: 'lastName'
+                },
+                {
+                    Header: 'Role',
+                    accessor: 'role'
+                },
+                {
+                    Header: 'Email',
+                    accessor: 'email'
+                },
+                {
+                    Header: 'Pass',
+                    accessor: 'passHash'
                 },
                 {
                     expander: true,

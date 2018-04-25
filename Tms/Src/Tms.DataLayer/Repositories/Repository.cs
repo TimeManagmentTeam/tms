@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Tms.DataLayer.Repositories.Interfaces;
 
 namespace Tms.DataLayer.Repositories
@@ -17,6 +20,11 @@ namespace Tms.DataLayer.Repositories
         public void Add(IEnumerable<TDbEntity> dbEntities)
         {
             EntitiesSet.AddRange(dbEntities);
+        }
+
+        public bool Any(Expression<Func<TDbEntity, bool>> predicate)
+        {
+            return EntitiesSet.Any(predicate);
         }
 
         public void Delete(TDbEntity dbEntity)
