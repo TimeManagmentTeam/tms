@@ -18,6 +18,23 @@ namespace Tms.WebUI.Controllers
         [HttpGet]
         public IActionResult GetAll() => Json(_service.GetAll());
 
+
+        [HttpPost("Get/{id}")]
+        public JsonResult Get(Guid id)
+        {
+            return Json(_service.Read(id));
+            /*return Json(new
+            {
+                Email = email,
+                FirstName = "Kirill",
+                LastName = "Grekhov",
+                MiddleName = "U",
+                DepartmentDirector = "Главный Руководитель",
+                Director = "Руководитель"
+            });*/
+        }
+
+
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(Guid id)
         {

@@ -1,0 +1,90 @@
+﻿.DayPicker-Caption > div::first-letter,
+.DayPicker-Weekday > abbr {
+    text-transform: uppercase;
+}
+
+
+.work-calendar {
+    position: relative;
+    border: 1px solid #bababa;
+    border-radius: 3px;
+    width: 279px;
+}
+
+
+.work-calendar__worked-time {
+    margin: 0 16px 16px;
+    color: #808080;
+    text-align: center;
+}
+
+
+.work-calendar__loading-wrapper {
+    position: absolute;
+    background: rgba(0, 0, 0, .3);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.work-calendar__loading-spinner {
+}
+
+
+.work-calendar__time-wrapper {
+    position: absolute;
+    background: #fff;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.work-calendar__date {
+    color: #808080;
+}
+
+
+.work-calendar__date::first-letter {
+    text-transform: uppercase;
+}
+
+
+.work-calendar__form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.work-calendar__time {
+    flex-basis: 20%;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 5px 10px;
+    color: #505050;
+    margin: 7px 0;
+}
+
+
+.work-calendar__submit {
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 7px 20px;
+    cursor: pointer;
+    background-color: rgb(228, 24, 73);
+    margin: 10px 0;
+}

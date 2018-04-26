@@ -38,12 +38,14 @@ namespace Tms.Services.EmployeesService
             employeer.FirstName = newDtoEmployee.FirstName;
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
+            employeer.Email = newDtoEmployee.Email;
+            /*
             employeer.Role = newDtoEmployee.Role;
             employeer.Blocked = newDtoEmployee.Blocked;
             employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
             employeer.DirectorId = newDtoEmployee.Director.Id;
-            employeer.Email = newDtoEmployee.Email;
             employeer.PassHash = newDtoEmployee.PassHash;
+            */
             _repositoryManager.SaveChanges();
         }
 

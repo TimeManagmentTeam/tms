@@ -26,7 +26,7 @@ namespace Tms.WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public JsonResult Login(AuthModel model)
         {
             //Проверяем что совпадает логин и пароль
@@ -56,6 +56,7 @@ namespace Tms.WebUI.Controllers
                 return Json(new
                 {
                     IsSuccess = true,
+                    Id = employee.Id,
                     Token = encodedToken
                 });
             }
