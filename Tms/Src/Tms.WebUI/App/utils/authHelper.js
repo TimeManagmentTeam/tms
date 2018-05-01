@@ -1,8 +1,8 @@
 ﻿const key = 'tms';
 
 export default {
-    saveAuth: (login, token) => {
-        localStorage.setItem(key, JSON.stringify({ login: login, access_token: token }));
+    saveAuth: (id, token) => {
+        localStorage.setItem(key, JSON.stringify({ id, token }));
     },
 
     clearAuth: () => {
@@ -18,23 +18,23 @@ export default {
         return false;
     },
 
-    getLogin: () => {
+    getId: () => {
         let item = localStorage.getItem(key);
-        let login = '';
+        let id = '';
         if (item) {
-            login = JSON.parse(item).login;
+            id = JSON.parse(item).id;
         }
 
-        return login;
+        return id;
     },
 
     getToken: () => {
         let item = localStorage.getItem(key);
         let token = null;
         if (item) {
-            token = JSON.parse(item).access_token;
+            token = JSON.parse(item).token;
         }
 
         return token;
     }
-}
+};

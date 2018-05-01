@@ -29,20 +29,18 @@ namespace Tms.WebUI.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult Login(AuthModel model)
         {
-            //Проверяем что совпадает логин и пароль
             if (_employeesService.Verify(model.Email, model.PassHash, out var employee))
             {
-                // создаем один claim который содержит логин нашего пользователя
                 var claims = new List<Claim>
                 {
+                    new Claim("Id", employee.Id.ToString()),
                     new Claim(ClaimTypes.Name, employee.FirstName),
                     new Claim(ClaimTypes.Email, employee.Email),
                     new Claim(ClaimTypes.Surname, employee.LastName),
                     new Claim("MiddleName", employee.MiddleName),
                     new Claim(ClaimTypes.Role, employee.Role.ToString())
                 };
-
-                //Создаём токен
+                
                 var token = new JwtSecurityToken(
                     issuer: Startup.AuthOptions.Issuer,
                     audience: Startup.AuthOptions.Audience,
@@ -51,12 +49,10 @@ namespace Tms.WebUI.Controllers
                     expires: DateTime.Now.Add(TimeSpan.FromMinutes(Startup.AuthOptions.Lifetime)),
                     signingCredentials: new SigningCredentials(Startup.AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
                 var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-                //Возвращаем токен пользователю
+                
                 return Json(new
                 {
                     IsSuccess = true,
-                    Id = employee.Id,
                     Token = encodedToken
                 });
             }

@@ -1,13 +1,13 @@
 ﻿import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import LoginPage from './containers/LoginPage';
-import ProfilePage from './containers/ProfilePage';
-import ProfileEditPage from './containers/ProfileEditPage';
+import LoginPageContainer from './containers/LoginPageContainer';
+import ProfilePageContainer from './containers/ProfilePageContainer';
+import ProfileEditPageContainer from './containers/ProfileEditPageContainer';
 
 export default (
     <Switch>
-        <Route exact path='/' component={LoginPage} />
-        <Route path='/profile/edit' component={ProfileEditPage} />
-        <Route path='/profile' component={ProfilePage} />
+        <Route exact path='/' component={LoginPageContainer} />
+        <Route path='/profile/edit' component={ProfileEditPageContainer} />
+        <Route path='/profile' component={ProfilePageContainer} />
     </Switch>
 );

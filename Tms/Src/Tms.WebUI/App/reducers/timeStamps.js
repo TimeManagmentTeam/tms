@@ -1,45 +1,44 @@
 ﻿import {
-    USER_REQUEST, USER_SUCCESS, USER_FAIL,
-    USER_EDIT_REQUEST, USER_EDIT_SUCCESS, USER_EDIT_FAIL
-} from '../constants/user';
+    TIME_STAMPS_REQUEST, TIME_STAMPS_SUCCESS, TIME_STAMPS_FAIL,
+    TIME_STAMPS_EDIT_REQUEST, TIME_STAMPS_EDIT_SUCCESS, TIME_STAMPS_EDIT_FAIL
+} from '../constants/timeStamps';
 
 const initialState = {
-    //isLoading: true
+    data: []
 };
 
-export default function userState(state = initialState, action) {
+export default function timeStampState(state = initialState, action) {
     switch (action.type) {
-        case USER_REQUEST:
+        case TIME_STAMPS_REQUEST:
             return {
                 ...state,
-                isInfoLoading: true,
+                isLoading: true,
                 error: null
             };
-        case USER_SUCCESS:
+        case TIME_STAMPS_SUCCESS:
             return {
                 ...state,
-                isInfoLoading: false,
-                info: action.info
+                isLoading: false,
+                data: action.timeStamps
             };
-        case USER_FAIL:
+        case TIME_STAMPS_FAIL:
             return {
                 ...state,
-                isInfoLoading: false,
+                isLoading: false,
                 error: action.error
             };
-
-        case USER_EDIT_REQUEST:
+        case TIME_STAMPS_EDIT_REQUEST:
             return {
                 ...state,
                 isEditLoading: true,
                 error: null
             };
-        case USER_EDIT_SUCCESS:
+        case TIME_STAMPS_EDIT_SUCCESS:
             return {
                 ...state,
                 isEditLoading: false
             };
-        case USER_EDIT_FAIL:
+        case TIME_STAMPS_EDIT_FAIL:
             return {
                 ...state,
                 isEditLoading: false,

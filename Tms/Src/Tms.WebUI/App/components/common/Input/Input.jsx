@@ -3,5 +3,5 @@ import './Input.css';
 
 
 export default props => (
-    <button className="button">{props.value}</button>
+    <input {...props} className={props.className ? `input ${props.className}` : "input"} />
 );

@@ -23,15 +23,6 @@ namespace Tms.WebUI.Controllers
         public JsonResult Get(Guid id)
         {
             return Json(_service.Read(id));
-            /*return Json(new
-            {
-                Email = email,
-                FirstName = "Kirill",
-                LastName = "Grekhov",
-                MiddleName = "U",
-                DepartmentDirector = "Главный Руководитель",
-                Director = "Руководитель"
-            });*/
         }
 
 
@@ -56,9 +47,9 @@ namespace Tms.WebUI.Controllers
         }
 
         [HttpPost("Edit")]
-        public IActionResult Edit(DtoEmployee employee)
+        public IActionResult Edit(DtoEmployee employee, string oldPassHash)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (oldPassHash == null || _service.Read(employee.Id).PassHash == oldPassHash))
             {
                 _service.Update(employee.Id, employee);
                 return new ContentResult { Content = employee.ToString(), StatusCode = 200 };

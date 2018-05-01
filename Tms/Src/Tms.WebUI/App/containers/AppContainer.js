@@ -1,9 +1,9 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as AuthActions from '../../actions/auth';
-import * as UserActions from '../../actions/user';
-import ProfilePage from '../../components/ProfilePage';
+import Layout from '../components/common/Layout';
+import * as AuthActions from '../actions/auth';
+import * as UserActions from '../actions/user';
 
 
 function mapStateToProps(state) {
@@ -20,4 +20,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

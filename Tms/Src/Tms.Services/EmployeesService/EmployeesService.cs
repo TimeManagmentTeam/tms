@@ -39,12 +39,15 @@ namespace Tms.Services.EmployeesService
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Email = newDtoEmployee.Email;
+            if (newDtoEmployee.PassHash != null)
+            {
+                employeer.PassHash = newDtoEmployee.PassHash;
+            }
             /*
             employeer.Role = newDtoEmployee.Role;
             employeer.Blocked = newDtoEmployee.Blocked;
             employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
             employeer.DirectorId = newDtoEmployee.Director.Id;
-            employeer.PassHash = newDtoEmployee.PassHash;
             */
             _repositoryManager.SaveChanges();
         }

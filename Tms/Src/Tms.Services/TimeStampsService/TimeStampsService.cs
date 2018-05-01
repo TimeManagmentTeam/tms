@@ -45,8 +45,8 @@ namespace Tms.Services.TimeStampsService
 
         public void Delete(Guid id)
         {
-            var dbTimeStamp = Read(id);
-            TimeStampsRepository.Delete(Mapper.Map<DbTimeStamp>(dbTimeStamp));
+            var dbTimeStamp = TimeStampsRepository.First(t => t.Id == id);
+            TimeStampsRepository.Delete(dbTimeStamp);
             _repositoryManager.SaveChanges();
         }
     }

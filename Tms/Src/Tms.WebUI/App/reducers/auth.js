@@ -4,7 +4,7 @@ import AuthHelper from '../utils/authHelper';
 const initialState = {};
 
 if (AuthHelper.isLogged()) {
-    initialState.email = AuthHelper.getLogin();
+    initialState.id = AuthHelper.getId();
     initialState.isAuthenticated = true;
 }
 
@@ -13,13 +13,13 @@ export default function authState(state = initialState, action) {
         case LOGIN_REQUEST:
             return {
                 ...state,
-                error: null,
-                waitingLogin: true
+                waitingLogin: true,
+                error: null
             };
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                email: action.email,
+                id: action.id,
                 isAuthenticated: true,
                 waitingLogin: false
             };
@@ -32,7 +32,7 @@ export default function authState(state = initialState, action) {
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-                email: null,
+                id: null,
                 isAuthenticated: false
             };
         default:

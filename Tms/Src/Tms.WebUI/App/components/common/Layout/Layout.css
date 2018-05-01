@@ -7,13 +7,28 @@ html {
     height: 100%;
 }
 
+
 .wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
+
 .content {
     flex: 1;
     padding: 30px 60px;
+}
+
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

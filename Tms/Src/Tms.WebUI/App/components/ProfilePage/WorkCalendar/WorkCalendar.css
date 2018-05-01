@@ -4,6 +4,11 @@
 }
 
 
+.DayPicker *:not(input):focus {
+    outline: none;
+}
+
+
 .work-calendar {
     position: relative;
     border: 1px solid #bababa;

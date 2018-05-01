@@ -1,3 +1,7 @@
-﻿export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
-export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
-export const USER_INFO_FAIL = 'USER_INFO_FAIL';
+﻿export const USER_REQUEST = 'USER_REQUEST';
+export const USER_SUCCESS = 'USER_SUCCESS';
+export const USER_FAIL = 'USER_FAIL';
+
+export const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST';
+export const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS';
+export const USER_EDIT_FAIL = 'USER_EDIT_FAIL';

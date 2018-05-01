@@ -2,21 +2,17 @@
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import routes from './routes';
 import configureStore from './store/configureStore'; 
 import history from './history';
+import routes from './routes';
 
 const store = configureStore();
 
-let App = () => (
+ReactDOM.render((
     <Provider store={store}>
         <Router history={history}>
             {routes}
         </Router>
     </Provider>
-);
-
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
+), document.getElementById('content')
 );
