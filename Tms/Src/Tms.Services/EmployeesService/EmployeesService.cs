@@ -4,7 +4,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
-using System.Collections.Generic;
 
 namespace Tms.Services.EmployeesService
 {
@@ -26,24 +25,24 @@ namespace Tms.Services.EmployeesService
 
         public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == id));
 
-        public ICollection<DtoEmployee> GetSubordinates(Guid id)
+        public IQueryable<DtoEmployee> GetSubordinates(Guid id)
         {
             return EmployeesRepository.Find(e => e.DepartmentDirectorId == id || e.DirectorId == id)
-                .ProjectTo<DtoEmployee>().ToArray();
+                .ProjectTo<DtoEmployee>();
         }
 
-        public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
+        public void Update(Guid employeeId, DtoEmployee newDtoEmployee)
         {
-            var employeer = EmployeesRepository.First(e => e.Id == employeerId);
-            employeer.FirstName = newDtoEmployee.FirstName;
-            employeer.MiddleName = newDtoEmployee.MiddleName;
-            employeer.LastName = newDtoEmployee.LastName;
-            employeer.Role = newDtoEmployee.Role;
-            employeer.Blocked = newDtoEmployee.Blocked;
-            employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
-            employeer.DirectorId = newDtoEmployee.Director.Id;
-            employeer.Email = newDtoEmployee.Email;
-            employeer.PassHash = newDtoEmployee.PassHash;
+            var employee = EmployeesRepository.First(e => e.Id == employeeId);
+            employee.FirstName = newDtoEmployee.FirstName;
+            employee.MiddleName = newDtoEmployee.MiddleName;
+            employee.LastName = newDtoEmployee.LastName;
+            employee.Role = newDtoEmployee.Role;
+            employee.Blocked = newDtoEmployee.Blocked;
+            employee.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
+            employee.DirectorId = newDtoEmployee.Director.Id;
+            employee.Email = newDtoEmployee.Email;
+            employee.PassHash = newDtoEmployee.PassHash;
             _repositoryManager.SaveChanges();
         }
 
@@ -65,14 +64,14 @@ namespace Tms.Services.EmployeesService
 
         public void Delete(Guid id)
         {
-            var employeer = EmployeesRepository.First(e => e.Id == id);
-            EmployeesRepository.Delete(employeer);
+            var employee = EmployeesRepository.First(e => e.Id == id);
+            EmployeesRepository.Delete(employee);
             _repositoryManager.SaveChanges();
         }
 
-        public ICollection<DtoEmployee> GetAll()
+        public IQueryable<DtoEmployee> GetAll()
         {
-            return EmployeesRepository.Find().ProjectTo<DtoEmployee>().ToArray();
+            return EmployeesRepository.Find().ProjectTo<DtoEmployee>();
         }
     }
 }

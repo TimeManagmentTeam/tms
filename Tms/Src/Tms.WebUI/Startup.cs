@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Tms.DataLayer.IoC;
 using Tms.Services.EmployeesService;
+using Tms.Services.ReportService;
+using Tms.Services.TimeStampsService;
 
 namespace Tms.WebUI
 {
@@ -25,7 +27,10 @@ namespace Tms.WebUI
         {
             services
                 .WithDataLayer(Configuration)
+                .AddScoped<TimeStampsService>()
                 .AddScoped<EmployeesService>()
+                .AddScoped<ReportBuilder>()
+                .AddScoped<ReportService>()
                 .AddAutoMapper();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

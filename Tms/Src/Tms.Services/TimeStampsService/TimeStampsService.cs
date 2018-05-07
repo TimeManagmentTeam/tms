@@ -24,9 +24,9 @@ namespace Tms.Services.TimeStampsService
             return Mapper.Map<DtoTimeStamp>(TimeStampsRepository.First(t => t.Id == id));
         }
 
-        public ICollection<DtoTimeStamp> Read(Guid employeerId, DateTime from, DateTime to)
+        public IQueryable<DtoTimeStamp> Read(Guid employeeId, DateTime from, DateTime to)
         {
-            return TimeStampsRepository.Find(t => t.Date >= from && t.Date <= to).ProjectTo<DtoTimeStamp>().ToArray();
+            return TimeStampsRepository.Find(t => t.Date >= from && t.Date < to).ProjectTo<DtoTimeStamp>();
         }
 
         public void Create(DtoTimeStamp dtoTimeStamp)
