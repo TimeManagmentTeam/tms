@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Tms.Services.ReportService
 {
@@ -11,14 +12,14 @@ namespace Tms.Services.ReportService
             _reportBuilder = reportBuilder;
         }
 
-        public byte[] GetExcelReport(DateTime from, DateTime to)
+        public List<Report.ReportMonth> GetListReport(DateTime from, DateTime to)
         {
-            return _reportBuilder.ForInterval(from,to).Build().ToExcel();
+            return _reportBuilder.ForInterval(from,to).Build().ToList();
         }
 
-        public byte[] GetExcelReport(Guid directorsId, DateTime from, DateTime to)
+        public List<Report.ReportMonth> GetListReport(Guid directorsId, DateTime from, DateTime to)
         {
-            return _reportBuilder.ForDirector(directorsId).ForInterval(from, to).Build().ToExcel();
+            return _reportBuilder.ForDirector(directorsId).ForInterval(from, to).Build().ToList();
         }
 
         public string GetJsonReport(DateTime from, DateTime to)

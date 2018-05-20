@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Tms.Services.EmployeesService;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Tms.Services.ReportService
 {
@@ -17,17 +16,9 @@ namespace Tms.Services.ReportService
             return JsonConvert.SerializeObject(_report, Formatting.Indented);
         }
 
-        public byte[] ToExcel()
+        public List<ReportMonth> ToList()
         {
-            //var excelApp = new Excel.Application();
-            //var workbook = excelApp.Workbooks.Add();
-            //Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
-            //workSheet.Cells[1, "A"] = "ID Number";
-            //workSheet.Cells[1, "B"] = "Current Balance";
-            //((Excel.Range)workSheet.Columns[1]).AutoFit();
-            //((Excel.Range)workSheet.Columns[2]).AutoFit();
-            //workbook.;
-            return null;
+            return _report;
         }
 
         public class ReportMonth

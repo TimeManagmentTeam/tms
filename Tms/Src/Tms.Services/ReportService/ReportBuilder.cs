@@ -10,7 +10,7 @@ namespace Tms.Services.ReportService
         private readonly EmployeesService.EmployeesService _employeesService;
         private readonly TimeStampsService.TimeStampsService _timeStampsService;
 
-        private IQueryable<DtoEmployee> _employees;
+        private ICollection<DtoEmployee> _employees;
         private DateTime _from = new DateTime(2018,01,01);
         private DateTime _to = DateTime.Today;
 

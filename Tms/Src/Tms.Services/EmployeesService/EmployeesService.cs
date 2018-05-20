@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
 
@@ -29,37 +31,39 @@ namespace Tms.Services.EmployeesService
             .Include("DepartmentDirector")
             .First());
 
-        public IQueryable<DtoEmployee> GetSubordinates(Guid id)
+        public ICollection<DtoEmployee> GetSubordinates(Guid id)
         {
-            var d = EmployeesRepository
+            return EmployeesRepository
                 .Find(e => e.DepartmentDirectorId == id || e.DirectorId == id)
                 .Include("Director")
-                .Include("DepartmentDirector");
-
-            var c = d
-                .Select(x => Mapper.Map<DtoEmployee>(x));
-
-            var f = c
+                .Include("DepartmentDirector")
+                .Select(x => Mapper.Map<DtoEmployee>(x))
                 .ToArray();
-                
-            return f;
         }
 
         public void Update(Guid employeeId, DtoEmployee newDtoEmployee)
         {
-            var employeer = EmployeesRepository.First(e => e.Id == employeerId);
+            var employeer = EmployeesRepository.First(e => e.Id == employeeId);
             employeer.FirstName = newDtoEmployee.FirstName;
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Email = newDtoEmployee.Email;
-            employeer.PassHash = newDtoEmployee.PassHash;
+            if (newDtoEmployee.PassHash != null)
+            {
+                employeer.PassHash = newDtoEmployee.PassHash;
+            }
             employeer.Role = newDtoEmployee.Role;
             employeer.Blocked = newDtoEmployee.Blocked;
-            
+
             if (newDtoEmployee.DepartmentDirector != null)
+            {
                 employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
+            }
+
             if (newDtoEmployee.Director != null)
+            {
                 employeer.DirectorId = newDtoEmployee.Director.Id;
+            }
 
             _repositoryManager.SaveChanges();
         }
@@ -87,9 +91,9 @@ namespace Tms.Services.EmployeesService
             _repositoryManager.SaveChanges();
         }
 
-        public IQueryable<DtoEmployee> GetAll()
+        public ICollection<DtoEmployee> GetAll()
         {
-            return EmployeesRepository.Find().ProjectTo<DtoEmployee>();
+            return EmployeesRepository.Find().ProjectTo<DtoEmployee>().ToArray();
         }
     }
 }

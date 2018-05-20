@@ -49,11 +49,11 @@ namespace Tms.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (directorId != null)
+                if (directorId != default(Guid))
                 {
                     employee.Director = _service.Read(directorId);
                 }
-                if (departmentDirectorId != null)
+                if (departmentDirectorId != default(Guid))
                 {
                     employee.DepartmentDirector = _service.Read(departmentDirectorId);
                 }
