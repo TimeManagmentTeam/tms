@@ -3,6 +3,7 @@ import Spinner from 'react-spinkit';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
 import './LoginForm.css';
+import history from '../../../history';
 
 
 export default class LoginForm extends React.Component {
@@ -11,7 +12,7 @@ export default class LoginForm extends React.Component {
         this.props.authActions.login({
             email: e.target.elements[0].value,
             pass: e.target.elements[1].value
-        })
+        });
     }
 
     render() {

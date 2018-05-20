@@ -26,7 +26,7 @@ namespace Tms.Services.TimeStampsService
 
         public ICollection<DtoTimeStamp> Read(Guid employeerId, DateTime from, DateTime to)
         {
-            return TimeStampsRepository.Find(t => t.Date >= from && t.Date <= to).ProjectTo<DtoTimeStamp>().ToArray();
+            return TimeStampsRepository.Find(t => t.DbEmployeeId == employeerId && t.Date >= from && t.Date <= to).ProjectTo<DtoTimeStamp>().ToArray();
         }
 
         public void Create(DtoTimeStamp dtoTimeStamp)

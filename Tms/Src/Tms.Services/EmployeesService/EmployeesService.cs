@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Tms.DataLayer.Entities;
 using Tms.DataLayer.Repositories.Interfaces;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tms.Services.EmployeesService
 {
@@ -24,12 +25,27 @@ namespace Tms.Services.EmployeesService
             _repositoryManager.SaveChanges();
         }
 
-        public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Id == id));
+        public DtoEmployee Read(Guid id) => Mapper.Map<DtoEmployee>(EmployeesRepository
+            .Find(e => e.Id == id)
+            .Include("Director")
+            .Include("DepartmentDirector")
+            .First());
 
         public ICollection<DtoEmployee> GetSubordinates(Guid id)
         {
-            return EmployeesRepository.Find(e => e.DepartmentDirectorId == id || e.DirectorId == id)
-                .ProjectTo<DtoEmployee>().ToArray();
+            var d = EmployeesRepository
+                .Find(e => e.DepartmentDirectorId == id || e.DirectorId == id)
+                .Include("Director")
+                .Include("DepartmentDirector");
+
+            var c = d
+                .Select(x => Mapper.Map<DtoEmployee>(x));
+
+            var f = c
+                .ToArray();
+
+
+            return f;
         }
 
         public void Update(Guid employeerId, DtoEmployee newDtoEmployee)
@@ -39,22 +55,21 @@ namespace Tms.Services.EmployeesService
             employeer.MiddleName = newDtoEmployee.MiddleName;
             employeer.LastName = newDtoEmployee.LastName;
             employeer.Email = newDtoEmployee.Email;
-            if (newDtoEmployee.PassHash != null)
-            {
-                employeer.PassHash = newDtoEmployee.PassHash;
-            }
-            /*
+            employeer.PassHash = newDtoEmployee.PassHash;
             employeer.Role = newDtoEmployee.Role;
             employeer.Blocked = newDtoEmployee.Blocked;
-            employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
-            employeer.DirectorId = newDtoEmployee.Director.Id;
-            */
+            
+            if (newDtoEmployee.DepartmentDirector != null)
+                employeer.DepartmentDirectorId = newDtoEmployee.DepartmentDirector.Id;
+            if (newDtoEmployee.Director != null)
+                employeer.DirectorId = newDtoEmployee.Director.Id;
+            
             _repositoryManager.SaveChanges();
         }
 
         public bool Verify(string email, string passHash, out DtoEmployee outEmployee)
         {
-            if (EmployeesRepository.Any(e=>e.Email==email))
+            if (EmployeesRepository.Any(e => e.Email == email))
             {
                 var employee = Mapper.Map<DtoEmployee>(EmployeesRepository.First(e => e.Email == email));
                 if (employee.PassHash == passHash)

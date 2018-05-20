@@ -28,19 +28,19 @@ export default class WorkCalendar extends React.Component {
         this.loadTimeStamps(date.getFullYear(), date.getMonth());
     }
 
-    loadTimeStamps = (year, mounth) => {
-        let firstDay = moment(new Date(year, mounth)).format('YYYY.MM.DD');
-        let lastDay = moment(new Date(new Date(year, mounth + 1) - 1)).format('YYYY.MM.DD');
+    loadTimeStamps = (year, month) => {
+        let firstDay = moment(new Date(year, month)).format('YYYY.MM.DD');
+        let lastDay = moment(new Date(new Date(year, month + 1) - 1)).format('YYYY.MM.DD');
 
-        this.props.tsActions.load(this.props.auth.id, firstDay, lastDay)
+        this.props.userActions.loadTimeStamps(this.props.user.info.id, firstDay, lastDay)
             .then(() => {
-                this.setState({ totalTime: TimeHelper.getTotalTime(this.props.ts.data.map(timeStamp => timeStamp.workedTime)) });
+                this.setState({ totalTime: TimeHelper.getTotalTime(this.props.user.ts.map(timeStamp => timeStamp.workedTime)) });
             });
     } 
 
     onDayClick = (date, { selected }) => {
         let timeStamp = selected ? TimeHelper.parseToJiraStyle(
-            this.props.ts.data.find(item => {
+            this.props.user.ts.find(item => {
                 return (item.date.getFullYear() === date.getFullYear() &&
                     item.date.getMonth() === date.getMonth() &&
                     item.date.getDate() === date.getDate());
@@ -59,8 +59,8 @@ export default class WorkCalendar extends React.Component {
         e.preventDefault();
         let time = TimeHelper.parseFromJiraStyle(e.target.elements[0].value);
         let date = moment(this.state.timeStampChanged.date).format('YYYY.MM.DD');
-        
-        let timeStamp = this.props.ts.data.find(item => {
+
+        let timeStamp = this.props.user.ts.find(item => {
             return (item.date.getFullYear() === this.state.timeStampChanged.date.getFullYear() &&
                 item.date.getMonth() === this.state.timeStampChanged.date.getMonth() &&
                 item.date.getDate() === this.state.timeStampChanged.date.getDate());
@@ -69,7 +69,7 @@ export default class WorkCalendar extends React.Component {
         let d = this.state.timeStampChanged.date;
 
         if (timeStamp) {
-            this.props.tsActions.edit(this.props.auth.id, date, time, timeStamp.id)
+            this.props.userActions.editTimeStamps(this.props.user.info.id, date, time, timeStamp.id)
                 .then(() => {
                     this.setState({
                         isTimeStampChange: false,
@@ -78,7 +78,7 @@ export default class WorkCalendar extends React.Component {
                     this.loadTimeStamps(d.getFullYear(), d.getMonth());
                 });
         } else {
-            this.props.tsActions.edit(this.props.auth.id, date, time)
+            this.props.userActions.editTimeStamps(this.props.user.info.id, date, time)
                 .then(() => {
                     this.setState({
                         isTimeStampChange: false,
@@ -109,11 +109,11 @@ export default class WorkCalendar extends React.Component {
                 localeUtils={MomentLocaleUtils}
                 locale='ru'
                 onDayClick={this.onDayClick}
-                selectedDays={this.props.ts.data.map(timeStamp => timeStamp.date)}
+                selectedDays={this.props.user.ts.map(timeStamp => timeStamp.date)}
                 onMonthChange={this.onMonthChange}
             />
             <div className="work-calendar__worked-time">Отработанное время за этот месяц: {this.state.totalTime}</div>
-            {this.props.ts.isLoading && <div className="work-calendar__loading-wrapper">
+            {this.props.user.isTSLoading && <div className="work-calendar__loading-wrapper">
                 <Spinner name="three-bounce" className="work-calendar__loading-spinner" />
             </div>}
             {this.state.isTimeStampChange && <div className="work-calendar__time-wrapper">

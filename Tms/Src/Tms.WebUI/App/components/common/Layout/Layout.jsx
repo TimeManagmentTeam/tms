@@ -6,25 +6,43 @@ import { Redirect } from 'react-router-dom';
 import './Layout.css';
 
 
-let Loading = props => (
-    <div className="loading">
-        <Spinner name="three-bounce" className="loading__spinner" fadeIn="none" />
-    </div>
-);
+export default class Layout extends React.Component {
+    state = {
+        location: null
+    };
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.auth.isAuthenticated && nextProps.location !== prevState.location) {
+            nextProps.userActions.load(nextProps.auth.id);
+            return {
+                location: nextProps.location
+            };
+        }
 
-export default props => {
-    if (!props.auth.isAuthenticated && props.location.pathname !== '/') {
-        return <Redirect to="/" />;
+        return null;
     }
 
-    return (
-        <div className="wrapper">
-            <Header {...props} />
-            <main className="content">
-                {props.isLoading ? <Loading /> : props.children}
-            </main>
-            <Footer />
-        </div>
-    );
-};
+    renderLoading() {
+        return (
+            <div className="loading">
+                <Spinner name="three-bounce" className="loading__spinner" fadeIn="none" />
+            </div>
+        );
+    }
+
+    render() {
+        if (!this.props.auth.isAuthenticated && this.props.location.pathname !== '/') {
+            return <Redirect to="/" />;
+        }
+
+        return (
+            <div className="wrapper">
+                <Header {...this.props} />
+                <main className="content">
+                    {this.props.isLoading ? this.renderLoading() : this.props.children}
+                </main>
+                <Footer />
+            </div>
+        );
+    }
+}

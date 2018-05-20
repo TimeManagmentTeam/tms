@@ -5,8 +5,8 @@ import history from '../history';
 
 
 export function login({ email, pass }) {
-    return (dispatch) => {
-        if (email && pass) {
+    return (dispatch) =>
+        new Promise((resolve, reject) => {
             dispatch({
                 type: LOGIN_REQUEST
             });
@@ -32,21 +32,19 @@ export function login({ email, pass }) {
                         type: LOGIN_SUCCESS,
                         id: data.Id
                     });
-                    history.push('/profile');
+                    //history.push('/profile');
+
+                    resolve({ id: data.Id, token: result.token });
                 })
                 .catch(error => {
                     dispatch({
                         type: LOGIN_FAIL,
                         error
                     });
+
+                    reject(error);
                 });
-        } else {
-            dispatch({
-                type: LOGIN_FAIL,
-                error: new Error('Почта или пароль пусты')
-            });
-        }
-    };
+        });
 }
 
 export function logout() {

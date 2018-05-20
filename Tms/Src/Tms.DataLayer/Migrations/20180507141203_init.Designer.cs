@@ -12,8 +12,8 @@ using Tms.DataLayer.Enums;
 namespace Tms.DataLayer.Migrations
 {
     [DbContext(typeof(TmsContext))]
-    [Migration("20180410074613_Employeer+TimeStamp")]
-    partial class EmployeerTimeStamp
+    [Migration("20180507141203_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,12 @@ namespace Tms.DataLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Blocked");
+
+                    b.Property<Guid?>("DepartmentDirectorId");
+
+                    b.Property<Guid?>("DirectorId");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
@@ -39,7 +45,13 @@ namespace Tms.DataLayer.Migrations
 
                     b.Property<int>("Role");
 
+                    b.Property<string>("XrmId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentDirectorId");
+
+                    b.HasIndex("DirectorId");
 
                     b.ToTable("EmployeeEntities");
                 });
@@ -60,6 +72,17 @@ namespace Tms.DataLayer.Migrations
                     b.HasIndex("DbEmployeeId");
 
                     b.ToTable("TimeStampsEntities");
+                });
+
+            modelBuilder.Entity("Tms.DataLayer.Entities.DbEmployee", b =>
+                {
+                    b.HasOne("Tms.DataLayer.Entities.DbEmployee", "DepartmentDirector")
+                        .WithMany()
+                        .HasForeignKey("DepartmentDirectorId");
+
+                    b.HasOne("Tms.DataLayer.Entities.DbEmployee", "Director")
+                        .WithMany()
+                        .HasForeignKey("DirectorId");
                 });
 
             modelBuilder.Entity("Tms.DataLayer.Entities.DbTimeStamp", b =>

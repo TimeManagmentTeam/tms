@@ -8,8 +8,7 @@ import * as UserActions from '../actions/user';
 
 function mapStateToProps(state) {
     return {
-        auth: state.auth,
-        user: state.user
+        auth: state.auth
     };
 }
 

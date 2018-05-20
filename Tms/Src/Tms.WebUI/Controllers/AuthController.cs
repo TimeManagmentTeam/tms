@@ -19,26 +19,14 @@ namespace Tms.WebUI.Controllers
             _employeesService = service;
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View(new AuthModel());
-        }
-
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public JsonResult Login(AuthModel model)
         {
             if (_employeesService.Verify(model.Email, model.PassHash, out var employee))
             {
                 var claims = new List<Claim>
                 {
-                    new Claim("Id", employee.Id.ToString()),
-                    new Claim(ClaimTypes.Name, employee.FirstName),
-                    new Claim(ClaimTypes.Email, employee.Email),
-                    new Claim(ClaimTypes.Surname, employee.LastName),
-                    new Claim("MiddleName", employee.MiddleName),
-                    new Claim(ClaimTypes.Role, employee.Role.ToString())
+                    new Claim("Id", employee.Id.ToString())
                 };
                 
                 var token = new JwtSecurityToken(
@@ -61,13 +49,6 @@ namespace Tms.WebUI.Controllers
             {
                 IsSuccess = false
             });
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult Test()
-        {
-            return View(User.Identity);
         }
     }
 }

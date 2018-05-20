@@ -3,30 +3,47 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as AuthActions from '../actions/auth';
 import * as UserActions from '../actions/user';
-import * as TSActions from '../actions/timeStamps';
 import AppContainer from './AppContainer';
 import ProfilePage from '../components/ProfilePage';
 
 
-const ProfilePageContainer = props => (
-    <AppContainer {...props} title="Профиль" isLoading={props.user.isInfoLoading || !('isInfoLoading' in props.user)}>
-        <ProfilePage {...props} />
-    </AppContainer>
-);
+class ProfilePageContainer extends React.Component {
+    componentDidMount() {
+        if (this.props.match.params.id) {
+            this.props.userActions.load(this.props.match.params.id);
+        }
+    }
+
+    render() {
+        let title = 'Профиль';
+        let user = this.props.auth.user;
+
+
+        if (this.props.match.params.id) {
+            title = 'Информация о сотруднике';
+            user = this.props.user;
+        }
+
+        return (
+            <AppContainer {...this.props} title={title} isLoading={!('isInfoLoading' in user) || user.isInfoLoading}>
+                <ProfilePage {...this.props} user={user} />
+            </AppContainer>
+        );
+    }
+}
+
 
 function mapStateToProps(state) {
     return {
         auth: state.auth,
-        user: state.user,
-        ts: state.ts
+        user: state.user
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         authActions: bindActionCreators(AuthActions, dispatch),
-        userActions: bindActionCreators(UserActions, dispatch),
-        tsActions: bindActionCreators(TSActions, dispatch)
+        userActions: bindActionCreators(UserActions, dispatch)
     };
 }
 

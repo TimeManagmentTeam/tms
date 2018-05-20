@@ -5,8 +5,6 @@ import './LoginPage.css';
 
 export default props => (
     <div className="login-form-container">
-        {props.auth.isAuthenticated
-            ? <div>Добро пожаловать, {props.auth.id}.</div>
-            : <LoginForm {...props} />}
+        <LoginForm {...props} />
     </div>
 );

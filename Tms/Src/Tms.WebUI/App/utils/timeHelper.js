@@ -5,7 +5,7 @@
         let hours = Number(timeArr[0]) % 8;
         let days = Math.floor(Number(timeArr[0]) / 8);
         
-        return (days ? `${days}d` : '') + (hours ? `${hours}h` : '') + `${minutes}m`;
+        return (days ? `${days}d` : '') + (hours ? `${hours}h` : '') + (minutes ? `${minutes}m` : '');
     },
 
     parseFromJiraStyle: str => {
