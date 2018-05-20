@@ -1,0 +1,35 @@
+﻿.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+
+.login-form__email,
+.login-form__password {
+    flex-basis: 20%;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 5px 10px;
+    color: #505050;
+    margin: 7px 0;
+}
+
+
+.login-form__button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.login-form__spinner {
+    color: rgb(228, 24, 73);
+}
+
+
+.login-form__error {
+    color: red;
+    margin: 7px 0;
+}
