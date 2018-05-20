@@ -34,5 +34,6 @@ namespace Tms.Services.EmployeesService
         [JsonIgnore]
         public virtual ICollection<DtoTimeStamp> TimeStamps { get; set; }
 
+        public string FullName => FirstName + " " + MiddleName + " " + LastName;
     }
 }
