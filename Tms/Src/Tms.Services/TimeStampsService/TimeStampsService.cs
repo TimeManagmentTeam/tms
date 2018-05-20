@@ -26,7 +26,7 @@ namespace Tms.Services.TimeStampsService
 
         public IQueryable<DtoTimeStamp> Read(Guid employeeId, DateTime from, DateTime to)
         {
-            return TimeStampsRepository.Find(t => t.Date >= from && t.Date < to).ProjectTo<DtoTimeStamp>();
+            return TimeStampsRepository.Find(t => t.DbEmployeeId == employeerId && t.Date >= from && t.Date <= to).ProjectTo<DtoTimeStamp>().ToArray();
         }
 
         public void Create(DtoTimeStamp dtoTimeStamp)
@@ -45,8 +45,8 @@ namespace Tms.Services.TimeStampsService
 
         public void Delete(Guid id)
         {
-            var dbTimeStamp = Read(id);
-            TimeStampsRepository.Delete(Mapper.Map<DbTimeStamp>(dbTimeStamp));
+            var dbTimeStamp = TimeStampsRepository.First(t => t.Id == id);
+            TimeStampsRepository.Delete(dbTimeStamp);
             _repositoryManager.SaveChanges();
         }
     }

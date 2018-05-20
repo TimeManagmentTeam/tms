@@ -1,24 +1,18 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import Header from './Header/Header.jsx';
-import Footer from './Footer/Footer.jsx';
-import Employees from './Employees/Employees.jsx';
-import './index.css';
+import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore'; 
+import history from './history';
+import routes from './routes';
 
+const store = configureStore();
 
-class App extends React.Component {
-    render() {
-        return (<div className="wrapper">
-            <Header />
-            <div className="content">
-                <Employees />
-            </div>
-            <Footer />
-        </div>);
-    }
-};
-
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
+ReactDOM.render((
+    <Provider store={store}>
+        <Router history={history}>
+            {routes}
+        </Router>
+    </Provider>
+), document.getElementById('content')
 );

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Tms.DataLayer.Enums;
@@ -19,16 +20,18 @@ namespace Tms.Services.EmployeesService
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
 
+        [JsonIgnore]
         public string PassHash { get; set; }
 
         public TmsRole Role { get; set; }
 
         public bool Blocked { get; set; }
 
-        public DtoEmployee Director { get; set; }
+        public virtual DtoEmployee Director { get; set; }
 
-        public DtoEmployee DepartmentDirector { get; set; }
-
+        public virtual DtoEmployee DepartmentDirector { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<DtoTimeStamp> TimeStamps { get; set; }
 
         public string FullName => FirstName + " " + MiddleName + " " + LastName;

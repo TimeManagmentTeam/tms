@@ -25,13 +25,15 @@ namespace Tms.DataLayer.Entities
         public TmsRole Role { get; set; }
 
         public bool Blocked { get; set; }
-
-        [ForeignKey("Director")]
+        
         public Guid? DirectorId { get; set; }
+
+        [ForeignKey("DirectorId")]
         public virtual DbEmployee Director { get; set; }
 
-        [ForeignKey("DepartmentDirector")]
         public Guid? DepartmentDirectorId { get; set; }
+
+        [ForeignKey("DepartmentDirectorId")]
         public virtual DbEmployee DepartmentDirector { get; set; }
 
         public virtual ICollection<DbTimeStamp> TimeStamps { get; set; }

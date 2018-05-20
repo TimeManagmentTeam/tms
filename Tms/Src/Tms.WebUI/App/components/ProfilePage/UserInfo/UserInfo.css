@@ -1,0 +1,23 @@
+﻿.user-info__row {
+    margin: 5px 0;
+}
+
+
+.user-info__label {
+    width: 200px;
+    float: left;
+    color: #808080;
+}
+
+
+    .user-info__label:after {
+        content: ":";
+    }
+
+
+.user-info__separator {
+    margin: 10px 0;
+    width: 200px;
+    background: linear-gradient(to right, #bebebe, #fff);
+    height: 1px;
+}

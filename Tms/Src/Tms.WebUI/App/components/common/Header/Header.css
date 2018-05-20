@@ -1,0 +1,97 @@
+﻿.header__top {
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+
+.logo__image {
+    width: 200px;
+    height: 84px;
+    padding-right: 20px;
+    border-right: 2px solid #bebebe;
+}
+
+
+.logo__title {
+    font-size: 18px;
+    padding-left: 20px;
+    color: #808080;
+}
+
+
+.welcome {
+}
+
+
+.header__bottom {
+    padding: 15px 60px;
+    background-color: rgb(228, 24, 73);
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+.header__user {
+    position: relative;
+}
+
+.header__user-name {
+    display: flex;
+    align-items: center;
+    color: #808080;
+}
+
+.header__user-menu {
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    padding: 2px 0;
+    margin: 7px 0;
+}
+
+    .header__user-menu::before {
+        position: absolute;
+        content: "";
+        top: -16px;
+        right: 3px;
+        border: 8px solid transparent;
+        border-bottom-color: #a0a0a0;
+    }
+
+    .header__user-menu::after {
+        position: absolute;
+        content: "";
+        top: -14px;
+        right: 4px;
+        border: 7px solid transparent;
+        border-bottom-color: #fff;
+    }
+    
+
+.header__user-menu-item {
+    margin: 5px 0;
+    padding: 5px 20px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.header__user-menu-item:hover {
+    background-color: #bebebe;
+    color: #fff;
+}
+
+.header__user-name-button {
+    cursor: pointer;
+    color: rgb(228, 24, 73);
+}

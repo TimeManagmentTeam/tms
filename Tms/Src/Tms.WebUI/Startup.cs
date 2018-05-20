@@ -31,6 +31,7 @@ namespace Tms.WebUI
                 .AddScoped<EmployeesService>()
                 .AddScoped<ReportBuilder>()
                 .AddScoped<ReportService>()
+
                 .AddAutoMapper();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -79,15 +80,19 @@ namespace Tms.WebUI
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
 
         public class AuthOptions
         {
             public const string Issuer = "MyAuthServer"; // издатель токена
-            public const string Audience = "http://localhost:5000"; // потребитель токена
+            public const string Audience = "http://localhost:54581"; // потребитель токена
             const string Key = "SecretSecretSecretSecretSecretSecretSecret";   // ключ для шифрации
-            public const int Lifetime = 1; // время жизни токена - 1 минута
+            public const int Lifetime = 1000; // время жизни токена - 1 минута
             public static SymmetricSecurityKey GetSymmetricSecurityKey()
             {
                 return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Key));
