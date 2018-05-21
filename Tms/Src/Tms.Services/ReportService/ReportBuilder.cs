@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tms.DataLayer.Enums;
 using Tms.Services.EmployeesService;
 
 namespace Tms.Services.ReportService
@@ -60,6 +61,10 @@ namespace Tms.Services.ReportService
                 var reportMonth = new Report.ReportMonth(month);
                 foreach (var employee in _employees)
                 {
+                    if(employee.Role==TmsRole.DepartmentDirector|| employee.Role == TmsRole.Director)
+                    {
+                        continue;
+                    }
                     var workedTime = _timeStampsService.Read(employee.Id, month, month.AddMonths(1))
                         .Select(e => e.WorkedTime)
                         .Select(t => t.TotalMinutes)

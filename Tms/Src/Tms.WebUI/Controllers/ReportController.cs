@@ -1,9 +1,7 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Text;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -18,6 +16,7 @@ namespace Tms.WebUI.Controllers
         public ReportController(ReportService reportService)
         {
             _reportService = reportService;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         [Route("ForDates")]
@@ -36,46 +35,16 @@ namespace Tms.WebUI.Controllers
         [Route("Excel")]
         public void ExportListFromTsv([FromQuery]string from, [FromQuery]string to)
         {
-            var context = HttpContext;
-            var response = context.Response;
             var dateFrom = DateTime.ParseExact(from, "yyyy-MM",
                                                System.Globalization.CultureInfo.InvariantCulture);
             var dateTo = DateTime.ParseExact(to, "yyyy-MM",
                                              System.Globalization.CultureInfo.InvariantCulture);
             var fileName = string.Format(@"TMSreport from {0} to {1}.xls", from, to);
 
-            response.Clear();
-            response.Headers[HeaderNames.ContentDisposition] = "attachment;filename="+fileName;
-            response.Headers[HeaderNames.ContentType] =  "application/vnd.ms-excel";
-            WriteTsv(_reportService.GetListReport(dateFrom, dateTo), response);
-        }
-
-
-
-        private void WriteTsv<T>(IEnumerable<T> data, HttpResponse response)
-        {
-            var props = TypeDescriptor.GetProperties(typeof(T));
-            foreach (PropertyDescriptor prop in props)
-            {
-                response.WriteAsync("test"); // header
-                //response.WriteAsync(prop.DisplayName); // header
-                response.WriteAsync("\t");
-            }
-            response.WriteAsync("\r\n");
-            foreach (var item in data)
-            {
-                foreach (PropertyDescriptor prop in props)
-                {
-                    if (prop.Converter != null)
-                    {
-                        response.WriteAsync(
-                            prop.Converter.ConvertToString(
-                                prop.GetValue(item)));
-                    }
-                    response.WriteAsync("\t");
-                }
-                response.WriteAsync("\r\n");
-            }
+            Response.Clear();
+            Response.Headers[HeaderNames.ContentDisposition] = "attachment;filename="+fileName;
+            Response.Headers[HeaderNames.ContentType] =  "application/vnd.ms-excel";
+            Response.WriteAsync(_reportService.GetTabularReport(dateFrom, dateTo), Encoding.GetEncoding(1251));
         }
 
         public FileResult Get()

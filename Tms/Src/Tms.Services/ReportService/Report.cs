@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using Newtonsoft.Json;
 using Tms.Services.EmployeesService;
 
@@ -19,6 +21,24 @@ namespace Tms.Services.ReportService
         public List<ReportMonth> ToList()
         {
             return _report;
+        }
+
+        public string ToTabularString()
+        {
+            var result = new StringBuilder();
+            foreach (var month in _report)
+            {
+                result.AppendLine(month.Month.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("ru-RU")));
+                foreach (var workedTime in month.WorkedTime)
+                {
+                    var employee = workedTime.Key;
+                    result.Append( employee.FirstName + " " + employee.MiddleName + " " + employee.LastName + "\t");
+                    result.Append(workedTime.Value);
+                    result.AppendLine();
+                }
+                result.AppendLine();
+            }
+            return result.ToString();
         }
 
         public class ReportMonth
